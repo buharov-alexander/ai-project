@@ -3,10 +3,15 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 function BalancePieChart({ data }) {
-  const chartData = data.map((item) => ({
-    name: item.name,
-    value: item.balanceRub,
-  }));
+  const chartData = Object.values(
+    data.reduce((acc, item) => {
+      if (!acc[item.bank]) {
+        acc[item.bank] = { name: item.bank, value: 0 };
+      }
+      acc[item.bank].value += item.balanceRub;
+      return acc;
+    }, {})
+  );
 
   return (
     <PieChart width={400} height={400}>
