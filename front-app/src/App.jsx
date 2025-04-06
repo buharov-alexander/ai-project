@@ -1,5 +1,6 @@
-import './App.css'
-import { Box, Grid } from '@mui/material';
+import './App.css';
+import { Box } from '@mui/material';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import CustomAppBar from './components/AppBar';
 import AccountTable from './components/AccountTable';
 import BalancePieChart from './components/BalancePieChart';
@@ -12,18 +13,16 @@ function App() {
   ];
 
   return (
-    <Box sx={{ flexGrow: 1, padding: 2 }}>
-      <CustomAppBar />
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <AccountTable data={data} />
-        </Grid>
-        <Grid item xs={12}>
-          <BalancePieChart data={data} />
-        </Grid>
-      </Grid>
-    </Box>
-  )
+    <Router>
+      <Box sx={{ flexGrow: 1, padding: 2 }}>
+        <CustomAppBar />
+        <Routes>
+          <Route path="/" element={<AccountTable data={data} />} />
+          <Route path="/chart" element={<BalancePieChart data={data} />} />
+        </Routes>
+      </Box>
+    </Router>
+  );
 }
 
 export default App;
